@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Toe Game</title>
+    <link rel="stylesheet" href="tac.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="score-board">
+            <div class="score">
+                <span class="player">Player X</span>
+                <span id="scoreX">0</span>
+            </div>
+            <div class="score">
+                <span class="player">Player O</span>
+                <span id="scoreO">0</span>
+            </div>
+        </div>
+
+        <div class="game-mode">
+            <button class="mode-btn active" data-mode="pvp">Player vs Player</button>
+            <button class="mode-btn" data-mode="pvc">Player vs Computer</button>
+        </div>
+
+        <div class="turn-indicator">
+            <span id="current-turn">Player X's Turn</span>
+        </div>
+
+        <div class="msg-container hide">
+            <p id="msg">WINNER</p>
+            <button id="new-btn">NEW GAME</button>
+        </div>
+
+        <main>
+            <h1>TIC TAC TOE</h1>
+            <div class="container">
+                <div class="game">
+                    <button class="box"></button>
+                    <button class="box"></button>
+                    <button class="box"></button>
+                    <button class="box"></button>
+                    <button class="box"></button>
+                    <button class="box"></button>
+                    <button class="box"></button>
+                    <button class="box"></button>
+                    <button class="box"></button>
+                </div>
+            </div>
+            <div class="controls">
+                <button id="reset-btn">RESET GAME</button>
+                <button id="undo-btn" title="Undo last move"><i class="fas fa-undo"></i></button>
+            </div>
+        </main>
+    </div>
+    <script src="toe.js"></script>
+</body>
+</html>
