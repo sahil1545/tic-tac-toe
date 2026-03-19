@@ -11,6 +11,7 @@ A modern, responsive, and accessible Tic-Tac-Toe game built with vanilla JavaScr
 - ♿ **Accessibility**: ARIA labels, semantic HTML, and screen reader support
 - ✨ **Modern Animations**: Smooth transitions and beautiful visual effects
 - 🔒 **Security Ready**: Production-ready with security headers
+- 🚀 **Vercel Deployed**: Live and ready to play!
 
 ## How to Play
 
