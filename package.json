@@ -4,10 +4,8 @@
   "description": "A modern, responsive Tic-Tac-Toe game with keyboard navigation and persistent scores",
   "main": "tic.html",
   "scripts": {
-    "build": "echo 'No build process needed - static files ready for deployment'",
-    "dev": "python -m http.server 3000",
-    "preview": "python -m http.server 3000",
-    "deploy": "echo 'Ready for Vercel deployment'"
+    "start": "python -m http.server 3000",
+    "dev": "python -m http.server 3000"
   },
   "keywords": [
     "tic-tac-toe",
