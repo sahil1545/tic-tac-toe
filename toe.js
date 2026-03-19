@@ -11,9 +11,36 @@ let modeButtons = document.querySelectorAll(".mode-btn");
 
 let turnO = true;
 let gameActive = true;
-let gameMode = "pvp"; // Default mode
+let gameMode = "pvp";
 let moveHistory = [];
 let scores = { X: 0, O: 0 };
+let currentBoxIndex = 0;
+
+// LocalStorage management
+const STORAGE_KEY = 'ticTacToeScores';
+
+const saveScores = () => {
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(scores));
+    } catch (error) {
+        console.error('Failed to save scores:', error);
+    }
+};
+
+const loadScores = () => {
+    try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+            const parsedScores = JSON.parse(saved);
+            if (parsedScores && typeof parsedScores.X === 'number' && typeof parsedScores.O === 'number') {
+                scores = parsedScores;
+                updateScores();
+            }
+        }
+    } catch (error) {
+        console.error('Failed to load scores:', error);
+    }
+};
 
 const winPatterns = [
     [0, 1, 2],
@@ -171,6 +198,66 @@ const showDraw = () => {
 const updateScores = () => {
     scoreX.textContent = scores.X;
     scoreO.textContent = scores.O;
+    saveScores();
+};
+
+// Keyboard navigation
+const handleKeyPress = (e) => {
+    if (!gameActive) return;
+    
+    switch(e.key) {
+        case 'ArrowUp':
+        case 'ArrowDown':
+        case 'ArrowLeft':
+        case 'ArrowRight':
+            e.preventDefault();
+            navigateBoard(e.key);
+            break;
+        case 'Enter':
+        case ' ':
+            e.preventDefault();
+            if (boxes[currentBoxIndex]) {
+                makeMove(boxes[currentBoxIndex]);
+            }
+            break;
+        case 'Escape':
+            e.preventDefault();
+            undoLastMove();
+            break;
+        case 'r':
+        case 'R':
+            e.preventDefault();
+            initializeGame();
+            break;
+    }
+};
+
+const navigateBoard = (direction) => {
+    const row = Math.floor(currentBoxIndex / 3);
+    const col = currentBoxIndex % 3;
+    let newRow = row, newCol = col;
+    
+    switch(direction) {
+        case 'ArrowUp':
+            newRow = Math.max(0, row - 1);
+            break;
+        case 'ArrowDown':
+            newRow = Math.min(2, row + 1);
+            break;
+        case 'ArrowLeft':
+            newCol = Math.max(0, col - 1);
+            break;
+        case 'ArrowRight':
+            newCol = Math.min(2, col + 1);
+            break;
+    }
+    
+    const newIndex = newRow * 3 + newCol;
+    if (newIndex !== currentBoxIndex && newIndex >= 0 && newIndex < 9) {
+        boxes[currentBoxIndex].classList.remove('keyboard-focus');
+        currentBoxIndex = newIndex;
+        boxes[currentBoxIndex].classList.add('keyboard-focus');
+    }
 };
 
 // Undo last move
@@ -185,9 +272,18 @@ const undoLastMove = () => {
 };
 
 // Event Listeners
-boxes.forEach((box) => {
+boxes.forEach((box, index) => {
     box.addEventListener("click", () => makeMove(box));
+    box.addEventListener('mouseenter', () => {
+        currentBoxIndex = index;
+        boxes.forEach(b => b.classList.remove('keyboard-focus'));
+    });
 });
+
+document.addEventListener('keydown', handleKeyPress);
+
+// Initialize keyboard focus on first box
+boxes[0].classList.add('keyboard-focus');
 
 resetBtn.addEventListener("click", () => {
     scores = { X: 0, O: 0 };
@@ -207,6 +303,9 @@ modeButtons.forEach(button => {
     initializeGame();
     });
 });
+
+// Load scores on page load
+loadScores();
 
 // Initialize the game
 initializeGame();

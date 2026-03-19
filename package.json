@@ -1,0 +1,26 @@
+{
+  "name": "tic-tac-toe-game",
+  "version": "1.0.0",
+  "description": "A modern, responsive Tic-Tac-Toe game with keyboard navigation and persistent scores",
+  "main": "tic.html",
+  "scripts": {
+    "build": "echo 'No build process needed - static files ready for deployment'",
+    "dev": "python -m http.server 3000",
+    "preview": "python -m http.server 3000",
+    "deploy": "echo 'Ready for Vercel deployment'"
+  },
+  "keywords": [
+    "tic-tac-toe",
+    "game",
+    "web",
+    "javascript",
+    "css",
+    "html",
+    "responsive",
+    "accessibility"
+  ],
+  "author": "Tic-Tac-Toe Game",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {}
+}

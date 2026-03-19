@@ -68,15 +68,39 @@ body::before {
     text-align: center;
     padding: 1rem 2rem;
     border-radius: 12px;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.score::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: rotate(45deg);
+    transition: all 0.5s ease;
+}
+
+.score:hover::before {
+    animation: shimmer 1s ease-in-out;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
 }
 
 .score.active {
     background: rgba(255, 255, 255, 0.3);
     transform: scale(1.05);
     border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 .game-mode {
@@ -148,17 +172,43 @@ body::before {
     color: white;
     background: rgba(255, 255, 255, 0.1);
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     justify-content: center;
     align-items: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.box::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease, height 0.3s ease;
+    border-radius: 50%;
+}
+
+.box:hover::before {
+    width: 100%;
+    height: 100%;
 }
 
 .box:hover {
     background: rgba(255, 255, 255, 0.2);
-    transform: scale(0.98);
+    transform: scale(0.98) translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.box:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
 }
 
 .box:disabled {
@@ -166,17 +216,40 @@ body::before {
     opacity: 0.9;
 }
 
+.box:disabled:hover {
+    transform: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.box.keyboard-focus {
+    outline: 3px solid rgba(255, 255, 255, 0.8);
+    outline-offset: 2px;
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.box:not(:disabled):focus {
+    outline: 3px solid rgba(255, 255, 255, 0.8);
+    outline-offset: 2px;
+    background: rgba(255, 255, 255, 0.25);
+}
+
 .winning-box {
     background: var(--gradient-accent);
     color: white;
-    animation: pulse 1s infinite;
+    animation: pulse 1s infinite, glow 2s infinite alternate;
     border: 1px solid rgba(255, 255, 255, 0.5);
+    transform: scale(1.05);
 }
 
 @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
+    0% { transform: scale(1.05); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1.05); }
+}
+
+@keyframes glow {
+    0% { box-shadow: 0 0 10px rgba(255, 75, 43, 0.5); }
+    100% { box-shadow: 0 0 20px rgba(255, 75, 43, 0.8), 0 0 30px rgba(255, 75, 43, 0.4); }
 }
 
 .controls {
@@ -217,19 +290,27 @@ body::before {
     text-align: center;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     z-index: 1000;
-    animation: popIn 0.3s ease-out;
+    animation: popIn 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), float 3s ease-in-out infinite;
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 @keyframes popIn {
     0% {
-        transform: translate(-50%, -50%) scale(0.8);
+        transform: translate(-50%, -50%) scale(0.8) rotate(-5deg);
         opacity: 0;
     }
+    50% {
+        transform: translate(-50%, -50%) scale(1.05) rotate(2deg);
+    }
     100% {
-        transform: translate(-50%, -50%) scale(1);
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
         opacity: 1;
     }
+}
+
+@keyframes float {
+    0%, 100% { transform: translate(-50%, -50%) translateY(0px); }
+    50% { transform: translate(-50%, -50%) translateY(-10px); }
 }
 
 #msg {
@@ -243,14 +324,35 @@ body::before {
     display: none;
 }
 
+.keyboard-help {
+    text-align: center;
+    margin-top: 1rem;
+    padding: 0.8rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.keyboard-help kbd {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.8rem;
+    margin: 0 0.2rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
 @media (max-width: 600px) {
     .game-container {
         padding: 1rem;
     }
     
     .game {
-        height: 80vmin;
-        width: 80vmin;
+        height: 70vmin;
+        width: 70vmin;
     }
     
     .score-board {
@@ -266,5 +368,15 @@ body::before {
     #reset-btn, #new-btn, #undo-btn {
         width: 100%;
         max-width: 200px;
+    }
+
+    .keyboard-help {
+        font-size: 0.7rem;
+        padding: 0.6rem;
+    }
+
+    .keyboard-help kbd {
+        font-size: 0.7rem;
+        padding: 0.1rem 0.3rem;
     }
 }

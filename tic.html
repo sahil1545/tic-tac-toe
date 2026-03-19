@@ -3,55 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic-Tac-Toe Game</title>
+    <meta name="description" content="Play Tic-Tac-Toe online! A modern, responsive game with player vs player and player vs computer modes. Features keyboard navigation, persistent scores, and beautiful animations.">
+    <meta name="keywords" content="tic tac toe, game, online, multiplayer, computer, responsive, modern">
+    <meta name="author" content="Tic-Tac-Toe Game">
+    <meta property="og:title" content="Tic-Tac-Toe Game">
+    <meta property="og:description" content="Play Tic-Tac-Toe online with friends or against the computer!">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="./og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#6a11cb">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <title>Tic-Tac-Toe Game | Play Online</title>
     <link rel="stylesheet" href="tac.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"></noscript>
 </head>
 <body>
     <div class="game-container">
-        <div class="score-board">
-            <div class="score">
-                <span class="player">Player X</span>
-                <span id="scoreX">0</span>
+        <header>
+            <div class="score-board">
+                <div class="score">
+                    <span class="player" aria-label="Player X score">Player X</span>
+                    <span id="scoreX" aria-live="polite">0</span>
+                </div>
+                <div class="score">
+                    <span class="player" aria-label="Player O score">Player O</span>
+                    <span id="scoreO" aria-live="polite">0</span>
+                </div>
             </div>
-            <div class="score">
-                <span class="player">Player O</span>
-                <span id="scoreO">0</span>
+
+            <div class="game-mode" role="tablist" aria-label="Game mode selection">
+                <button class="mode-btn active" data-mode="pvp" role="tab" aria-selected="true" aria-controls="game-board">Player vs Player</button>
+                <button class="mode-btn" data-mode="pvc" role="tab" aria-selected="false" aria-controls="game-board">Player vs Computer</button>
             </div>
-        </div>
 
-        <div class="game-mode">
-            <button class="mode-btn active" data-mode="pvp">Player vs Player</button>
-            <button class="mode-btn" data-mode="pvc">Player vs Computer</button>
-        </div>
+            <div class="turn-indicator" role="status" aria-live="polite">
+                <span id="current-turn">Player X's Turn</span>
+            </div>
+        </header>
 
-        <div class="turn-indicator">
-            <span id="current-turn">Player X's Turn</span>
-        </div>
-
-        <div class="msg-container hide">
+        <div class="msg-container hide" role="alert" aria-live="assertive">
             <p id="msg">WINNER</p>
-            <button id="new-btn">NEW GAME</button>
+            <button id="new-btn" aria-label="Start new game">NEW GAME</button>
         </div>
 
         <main>
             <h1>TIC TAC TOE</h1>
             <div class="container">
-                <div class="game">
-                    <button class="box"></button>
-                    <button class="box"></button>
-                    <button class="box"></button>
-                    <button class="box"></button>
-                    <button class="box"></button>
-                    <button class="box"></button>
-                    <button class="box"></button>
-                    <button class="box"></button>
-                    <button class="box"></button>
+                <div class="game" id="game-board" role="grid" aria-label="Tic Tac Toe game board">
+                    <button class="box" role="gridcell" aria-label="Box 1" tabindex="0"></button>
+                    <button class="box" role="gridcell" aria-label="Box 2" tabindex="0"></button>
+                    <button class="box" role="gridcell" aria-label="Box 3" tabindex="0"></button>
+                    <button class="box" role="gridcell" aria-label="Box 4" tabindex="0"></button>
+                    <button class="box" role="gridcell" aria-label="Box 5" tabindex="0"></button>
+                    <button class="box" role="gridcell" aria-label="Box 6" tabindex="0"></button>
+                    <button class="box" role="gridcell" aria-label="Box 7" tabindex="0"></button>
+                    <button class="box" role="gridcell" aria-label="Box 8" tabindex="0"></button>
+                    <button class="box" role="gridcell" aria-label="Box 9" tabindex="0"></button>
                 </div>
             </div>
             <div class="controls">
-                <button id="reset-btn">RESET GAME</button>
-                <button id="undo-btn" title="Undo last move"><i class="fas fa-undo"></i></button>
+                <button id="reset-btn" aria-label="Reset all scores and start new game">RESET GAME</button>
+                <button id="undo-btn" title="Undo last move" aria-label="Undo last move"><i class="fas fa-undo"></i></button>
+            </div>
+            <div class="keyboard-help">
+                <p><kbd>Arrow Keys</kbd> Navigate | <kbd>Enter/Space</kbd> Select | <kbd>Esc</kbd> Undo | <kbd>R</kbd> Reset</p>
             </div>
         </main>
     </div>
